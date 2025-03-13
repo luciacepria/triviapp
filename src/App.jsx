@@ -2,6 +2,10 @@ import { useState } from 'react'
 import QuestionCard from './components/QuestionCard'
 import Buttons from './components/Buttons'
 import Options from './components/Options'
+import { generate } from './llm/Generator'
+import { BASE_PROMPT } from './llm/PromptCreator'
+
+const MODEL_NAME = "llama3.2"
 
 const questions = [
   {question: "What is the capital of Australia?", answer: "Canberra"}, 
@@ -13,13 +17,26 @@ const questions = [
 function App() {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
+  const [disableNew, setDisableNew] = useState(false);
 
   const revealAnswer = () => setShowAnswer(true);
 
-  const newQuestion = () => {
+  const newQuestion = async () => {
+    if (questionIndex === questions.length - 1 && !disableNew) {
+      setDisableNew(true);
+      let newQuestions = await generate(BASE_PROMPT, MODEL_NAME);
+      if (newQuestions) {
+        questions.push(...newQuestions);
+      }
+      setDisableNew(false);
+    }
+  
     setShowAnswer(false);
     setQuestionIndex((prevIndex) => (prevIndex + 1) % questions.length);
-  }
+  };
+
+  console.log("index: " + questionIndex)
+  console.log(questions)
 
   return (
     <>
@@ -34,7 +51,10 @@ function App() {
 
       <Buttons 
       revealAnswer={revealAnswer} 
-      newQuestion = {newQuestion}>
+      newQuestion = {newQuestion}
+      disableNew={disableNew}
+      nextText={disableNew? "Generating..." : "Next Question"}
+      >
 
       </Buttons>
     </>

@@ -17,9 +17,14 @@ export async function generate(prompt, model) {
     const data = await response.json()
     const questionsObject = await JSON.parse(data.response)
     const questions = questionsObject.questions
-    console.log(questions)
     if (questions == undefined)
         return null
     return questions
 }
 
+export async function getModels() {
+    const response = await fetch(API_URL + "tags")
+    const data = await response.json()
+    const models = data.models.map(({ name }) => name)
+    return models
+}

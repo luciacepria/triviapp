@@ -2,10 +2,11 @@ import { useState } from 'react'
 import QuestionCard from './components/QuestionCard'
 import Buttons from './components/Buttons'
 import Options from './components/Options'
-import { generate } from './llm/Generator'
+import ModelSelector from './components/ModelSelector'
+import { generate, getModels } from './llm/Generator'
 import { BASE_PROMPT } from './llm/PromptCreator'
 
-const MODEL_NAME = "llama3.2"
+const models = await getModels()
 
 const questions = [
   {question: "What is the capital of Australia?", answer: "Canberra"}, 
@@ -18,13 +19,15 @@ function App() {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
   const [disableNew, setDisableNew] = useState(false);
+  const [model, setModel] = useState("")
+
 
   const revealAnswer = () => setShowAnswer(true);
 
   const newQuestion = async () => {
     if (questionIndex === questions.length - 1 && !disableNew) {
       setDisableNew(true);
-      let newQuestions = await generate(BASE_PROMPT, MODEL_NAME);
+      let newQuestions = await generate(BASE_PROMPT, model);
       if (newQuestions) {
         questions.push(...newQuestions);
       }
@@ -40,6 +43,11 @@ function App() {
 
   return (
     <>
+      <ModelSelector
+      model = {model}
+      models = {models}
+      setModel = {setModel}
+      />
       <Options></Options>
 
       <QuestionCard 

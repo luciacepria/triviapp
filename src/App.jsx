@@ -4,7 +4,7 @@ import Buttons from './components/Buttons'
 import Options from './components/Options'
 import ModelSelector from './components/ModelSelector'
 import { generate, getModels } from './llm/Generator'
-import { BASE_PROMPT } from './llm/PromptCreator'
+import { getBasePrompt, setQuestions} from './llm/PromptCreator'
 
 const models = await getModels()
 
@@ -27,7 +27,8 @@ function App() {
   const newQuestion = async () => {
     if (questionIndex === questions.length - 1 && !disableNew) {
       setDisableNew(true);
-      let newQuestions = await generate(BASE_PROMPT, model);
+      let newQuestions = await generate(getBasePrompt(), model);
+      setQuestions(newQuestions)
       if (newQuestions) {
         questions.push(...newQuestions);
       }
@@ -40,6 +41,7 @@ function App() {
 
   console.log("index: " + questionIndex)
   console.log(questions)
+  console.log(getBasePrompt())
 
   return (
     <>

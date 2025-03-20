@@ -9,11 +9,7 @@ import { getBasePrompt, setQuestions} from './llm/PromptCreator'
 const models = await getModels()
 
 const questions = [
-  {question: "What is the capital of Australia?", answer: "Canberra"}, 
-  {question: "Who painted the Mona Lisa?", answer: "Leonardo da Vinci"}, 
-  {question: "What is the chemical symbol for gold?", answer: "Au"}, 
-  {question: "Which planet is known as the Red Planet?", answer: "Mars"}, 
-  {question: "In what year did the Titanic sink?", answer: "1912"}];
+  {question: "To start click on \"Next Question\"", answer: ""}];
 
 function App() {
   const [questionIndex, setQuestionIndex] = useState(0);
@@ -28,9 +24,9 @@ function App() {
     if (questionIndex === questions.length - 1 && !disableNew) {
       setDisableNew(true);
       let newQuestions = await generate(getBasePrompt(), model);
-      setQuestions(newQuestions)
       if (newQuestions) {
         questions.push(...newQuestions);
+              setQuestions(newQuestions)
       }
       setDisableNew(false);
     }

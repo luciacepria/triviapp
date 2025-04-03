@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import QuestionCard from './components/QuestionCard'
 import Buttons from './components/Buttons'
 import Options from './components/Options'
@@ -8,12 +8,12 @@ import { generate, getModels } from './llm/Generator'
 import { getBasePrompt, setQuestions} from './llm/PromptCreator'
 
 function App({modelsTest}) {
-  const [questionIndex, setQuestionIndex] = useState(0);
+  let [questionIndex,setQuestionIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
   const [disableNew, setDisableNew] = useState(false);
   const [model, setModel] = useState("")
   const [models, setModels] = useState([])
-  const [questions, setQuestionsState] = useState(
+  let questions = useRef(
     [{question: "To start click on \"Next Question\"", answer: ""}]
   )
 
@@ -21,7 +21,9 @@ function App({modelsTest}) {
   useEffect(() => {
     async function fetchModels() {
       const fetchedModels = await getModels();
-      setModels(fetchedModels);
+      setModels(fetchedModels)
+      if (fetchedModels.length > 0)
+        setModel(fetchedModels[0])
     }
     fetchModels();
   }, []);
@@ -32,18 +34,18 @@ function App({modelsTest}) {
   const revealAnswer = () => setShowAnswer(true);
 
   const newQuestion = async () => {
-    if (questionIndex === questions.length - 1 && !disableNew) {
+    if (questionIndex === questions.current.length - 1 && !disableNew) {
       setDisableNew(true);
       let newQuestions = await generate(getBasePrompt(), model);
       if (newQuestions) {
-        setQuestionsState([...questions, ...newQuestions])
+        questions.current = [...questions.current, ...newQuestions]
         setQuestions(newQuestions)
       }
       setDisableNew(false);
     }
   
     setShowAnswer(false);
-    setQuestionIndex((prevIndex) => (prevIndex + 1) % questions.length);
+    setQuestionIndex((prevIndex) => (prevIndex + 1) % questions.current.length)
   };
 
   if (models.length == 0) return <ModelsNotFound/>
@@ -58,8 +60,8 @@ function App({modelsTest}) {
       <Options></Options>
 
       <QuestionCard 
-      question={questions[questionIndex]?.question} 
-      answer= {questions[questionIndex]?.answer} 
+      question={questions.current[questionIndex]?.question} 
+      answer= {questions.current[questionIndex]?.answer} 
       showAnswer= {showAnswer}>
 
       </QuestionCard>

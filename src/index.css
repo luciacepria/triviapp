@@ -68,7 +68,13 @@ button {
   background-color: #3F72AF;
   cursor: pointer;
   transition: border-color 0.25s;
-  margin: 10px;
+  margin: 10px; 
+}
+
+button:disabled {
+  cursor: not-allowed;
+  color: white;
+  background-color: grey;
 }
 
 button:hover {

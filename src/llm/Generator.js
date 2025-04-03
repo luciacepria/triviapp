@@ -12,17 +12,22 @@ function isValidURL(url) {
 export async function generate(prompt, model, url = API_URL) {
     if (!prompt || !model || !url || !isValidURL(url)) 
         return null
-    const response = await fetch(url + "generate", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ 
-            prompt: prompt,
-            stream: false,
-            model: model
-            }),
-    })
+    let response 
+    try {
+        response = await fetch(url + "generate", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ 
+                prompt: prompt,
+                stream: false,
+                model: model
+                }),
+        })
+    } catch {
+        return null
+    }
     if (response.ok) {
         const data = await response.json()
         const questionsObject = await JSON.parse(data.response)
@@ -35,7 +40,14 @@ export async function generate(prompt, model, url = API_URL) {
 }
 
 export async function getModels(url = API_URL) {
-    const response = await fetch(url + "tags")
+    if (!url || !isValidURL(url)) 
+        return null
+    let response 
+    try {
+        response = await fetch(url + "tags")
+    } catch {
+        return []
+    }
     if (response.ok) {
         const data = await response.json()
         const models = data.models.map(({ name }) => name)

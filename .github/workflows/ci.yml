@@ -1,0 +1,25 @@
+name: test project
+
+on: 
+  pull_request:
+    branches: [main]
+
+jobs: 
+  build-and-test:
+    runs-on: ubuntu-latest
+    container: node:20
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: run ESLint
+        run: npm run lint
+
+      - name: Run tests
+        run: npm run test
+
+      - name: Build project
+        run: npm run build

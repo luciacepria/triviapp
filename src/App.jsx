@@ -7,7 +7,7 @@ import ModelsNotFound from './components/ModelsNotFound'
 import { generate, getModels } from './llm/Generator'
 import { getBasePrompt, setQuestions} from './llm/PromptCreator'
 
-function App() {
+function App({modelsTest}) {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
   const [disableNew, setDisableNew] = useState(false);
@@ -17,6 +17,7 @@ function App() {
     [{question: "To start click on \"Next Question\"", answer: ""}]
   )
 
+
   useEffect(() => {
     async function fetchModels() {
       const fetchedModels = await getModels();
@@ -24,6 +25,9 @@ function App() {
     }
     fetchModels();
   }, []);
+
+  if (modelsTest)
+    setModels(modelsTest) // testing no models
 
   const revealAnswer = () => setShowAnswer(true);
 

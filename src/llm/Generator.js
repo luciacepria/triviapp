@@ -1,9 +1,18 @@
 export const API_URL = "http://localhost:11434/api/" 
 
-export async function generate(prompt, model) {
-    if (!prompt || !model) 
+function isValidURL(url) {
+    try {
+        new URL(url);
+        return true;
+    } catch (error) {
+        return false;
+    }
+}
+
+export async function generate(prompt, model, url = API_URL) {
+    if (!prompt || !model || !url || !isValidURL(url)) 
         return null
-    const response = await fetch(API_URL + "generate", {
+    const response = await fetch(url + "generate", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -12,18 +21,21 @@ export async function generate(prompt, model) {
             prompt: prompt,
             stream: false,
             model: model
-         }),
+            }),
     })
-    const data = await response.json()
-    const questionsObject = await JSON.parse(data.response)
-    const questions = questionsObject.questions
-    if (questions == undefined)
-        return null
-    return questions
+    if (response.ok) {
+        const data = await response.json()
+        const questionsObject = await JSON.parse(data.response)
+        const questions = questionsObject.questions
+        if (questions == undefined)
+            return null
+        return questions 
+    }
+    return null
 }
 
-export async function getModels() {
-    const response = await fetch(API_URL + "tags")
+export async function getModels(url = API_URL) {
+    const response = await fetch(url + "tags")
     if (response.ok) {
         const data = await response.json()
         const models = data.models.map(({ name }) => name)

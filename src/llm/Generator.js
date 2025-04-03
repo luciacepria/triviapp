@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:11434/api/" 
+export const API_URL = "http://localhost:11434/api/" 
 
 export async function generate(prompt, model) {
     if (!prompt || !model) 
@@ -24,7 +24,10 @@ export async function generate(prompt, model) {
 
 export async function getModels() {
     const response = await fetch(API_URL + "tags")
-    const data = await response.json()
-    const models = data.models.map(({ name }) => name)
-    return models
+    if (response.ok) {
+        const data = await response.json()
+        const models = data.models.map(({ name }) => name)
+        return models
+    } else
+        return []
 }

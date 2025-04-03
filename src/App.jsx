@@ -1,22 +1,29 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import QuestionCard from './components/QuestionCard'
 import Buttons from './components/Buttons'
 import Options from './components/Options'
 import ModelSelector from './components/ModelSelector'
+import ModelsNotFound from './components/ModelsNotFound'
 import { generate, getModels } from './llm/Generator'
 import { getBasePrompt, setQuestions} from './llm/PromptCreator'
-
-const models = await getModels()
-
-const questions = [
-  {question: "To start click on \"Next Question\"", answer: ""}];
 
 function App() {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
   const [disableNew, setDisableNew] = useState(false);
   const [model, setModel] = useState("")
+  const [models, setModels] = useState([])
+  const [questions, setQuestionsState] = useState(
+    [{question: "To start click on \"Next Question\"", answer: ""}]
+  )
 
+  useEffect(() => {
+    async function fetchModels() {
+      const fetchedModels = await getModels();
+      setModels(fetchedModels);
+    }
+    fetchModels();
+  }, []);
 
   const revealAnswer = () => setShowAnswer(true);
 
@@ -25,8 +32,8 @@ function App() {
       setDisableNew(true);
       let newQuestions = await generate(getBasePrompt(), model);
       if (newQuestions) {
-        questions.push(...newQuestions);
-              setQuestions(newQuestions)
+        setQuestionsState([...questions, ...newQuestions])
+        setQuestions(newQuestions)
       }
       setDisableNew(false);
     }
@@ -35,10 +42,8 @@ function App() {
     setQuestionIndex((prevIndex) => (prevIndex + 1) % questions.length);
   };
 
-  console.log("index: " + questionIndex)
-  console.log(questions)
-  console.log(getBasePrompt())
-
+  if (models.length == 0) return <ModelsNotFound/>
+  
   return (
     <>
       <ModelSelector
@@ -49,8 +54,8 @@ function App() {
       <Options></Options>
 
       <QuestionCard 
-      question={questions[questionIndex].question} 
-      answer= {questions[questionIndex].answer} 
+      question={questions[questionIndex]?.question} 
+      answer= {questions[questionIndex]?.answer} 
       showAnswer= {showAnswer}>
 
       </QuestionCard>
@@ -59,7 +64,7 @@ function App() {
       revealAnswer={revealAnswer} 
       newQuestion = {newQuestion}
       disableNew={disableNew}
-      nextText={disableNew? "Generating..." : "Next Question"}
+      nextText={disableNew ? "Generating..." : "Next Question"}
       >
 
       </Buttons>

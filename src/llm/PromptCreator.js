@@ -2,7 +2,6 @@ let questions = []
 
 export function setQuestions(dicc){
     questions = [...questions, ...dicc];
-    
 }
 
 export function getBasePrompt() {

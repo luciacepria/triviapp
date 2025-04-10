@@ -1,4 +1,6 @@
-# TriviApp
+# <img src="https://github.com/user-attachments/assets/ec869d49-277f-4143-93ae-19d12a813b4a" alt="TriviApp Icon" width="45" style="vertical-align: middle;"> TriviApp
+
+
 <p align="center">
 <img src="https://github.com/user-attachments/assets/052a9402-886f-4153-a4a1-832b0e6269ab"
   alt="Screenshot">

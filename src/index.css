@@ -85,3 +85,60 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 320px; 
+  height: 100vh;
+  background-color: #1f2937; 
+  color: white;
+  padding: 1rem;
+  z-index: 40;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
+  transform: translateX(-100%); 
+  transition: transform 0.3s ease-in-out; 
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: left;
+  margin-bottom: 1.5rem;
+}
+
+
+.sidebar-header h2 {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+
+.sidebar-close {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: white;
+  cursor: pointer;
+}
+
+.sidebar-close:hover {
+  color: #f87171; 
+}
+
+.sidebar-content {
+  text-align: left; 
+}
+
+
+.sidebar-content label {
+  display: block;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  text-align: left;
+}

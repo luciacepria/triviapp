@@ -1,11 +1,7 @@
-const handleClick = () =>{
-  alert("Questions will be generated. When you choose an answer, click the “Reveal Answer” button to see the correct answer. To generate a new question, click the “New Question” button.")
-}
-export default function Options() {
+export default function Options({ sidebarOpen, setSidebarOpen }) {
   return (
-    <div className='options'>
-        <i onClick={handleClick} className="fa fa-info-circle icon" ></i> 
+    <div className="options">
+      <i onClick={() => setSidebarOpen(!sidebarOpen)} className="fa-solid fa-gear"></i>
     </div>
-    
-  )
+  );
 }

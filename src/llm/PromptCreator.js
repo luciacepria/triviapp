@@ -1,7 +1,13 @@
 let questions = []
+let categories = ["Geography", "Entertainment", "History", "Art and literature", "Science and Nature", "Sports and Leisure"]
+
 
 export function setQuestions(dicc){
     questions = [...questions, ...dicc];
+}
+
+export function setCategories(cat){
+    categories = cat;
 }
 
 export function getBasePrompt() {
@@ -10,6 +16,7 @@ export function getBasePrompt() {
         `
     As a trivia question generator, provide me with 3 questions following the format below that will be parsed into the application.
     Keep the questions concise and simple, but not too easy.
+    Generate the quesitons regadin this categoiry or categories ${categories}
     Do not generate any of this questions or any variations of them  ${questions.map(q => `"${q.question}"`).join(", ")}
     Do not generate any header nor footer, just the questions in the format below. 
     Start with the { directly and end with }, do not generate '''JSON''' at any cost, always start with { and end with }.

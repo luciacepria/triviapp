@@ -13,6 +13,16 @@ function App({modelsTest}) {
   const [model, setModel] = useState("")
   const [models, setModels] = useState([])
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const [categories, setCategories] = useState({
+    geography: true,
+    entertainment: true,
+    history: true,
+    artLiterature: true,
+    scienceNature: true,
+    sportsLeisure: true,
+});
+
   let questions = useRef(
     [{question: "To start click on \"Next Question\"", answer: ""}]
   )
@@ -46,6 +56,13 @@ function App({modelsTest}) {
   
     setShowAnswer(false);
     setQuestionIndex((prevIndex) => (prevIndex + 1) % questions.current.length)
+
+
+
+    console.log(getBasePrompt());
+
+
+    
   };
 
   
@@ -59,6 +76,8 @@ function App({modelsTest}) {
       model = {model}
       models = {models}
       setModel = {setModel}
+      categories = {categories}
+      setCategories = {setCategories}
       />
       
       <QuestionCard 

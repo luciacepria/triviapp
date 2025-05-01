@@ -122,18 +122,24 @@ function App({modelsTest}) {
       newQuestion = {newQuestion}
       disableNew={disableNew}
       nextText={disableNew ? "Generating..." : "Next Question"}
+      minutes = {minutes}
+      seconds = {seconds}
+      intervalRef = {intervalRef}
+      setMinutesCountdown = {setMinutesCountdown}
+      setSecondsCountdown = {setSecondsCountdown}
+      setIsRunning = {setIsRunning}
       />
 
       <StartCountdown
       countdown={countdown}
       setMinutesCountdown = {setMinutesCountdown}
-      secondsCountdown = {secondsCountdown}
       setSecondsCountdown = {setSecondsCountdown}
       intervalRef = {intervalRef}
       isRunning = {isRunning}
       setIsRunning = {setIsRunning}
       minutes = {minutes}
       seconds = {seconds}
+      revealAnswer = {revealAnswer}
       />
       
     </>

@@ -45,13 +45,15 @@ h1 {
 
 .card {
   padding: 2em;
-  width: 18rem;
-  height: 8rem;
+  width: 35rem;
+  height: 20rem;
   background-color: #F9F7F7;
   color: #2b2b2b;
   border-radius: 15px;
   align-content: center;
   text-align: center;
+  font-size: 1.5em;
+  font-weight: 550;
 }
 
 .options {

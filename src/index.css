@@ -129,3 +129,33 @@ button:focus-visible {
   margin-bottom: 1rem;
   font-size: 0.9rem;
 }
+
+.container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.enableButton {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.4em 0.8em;
+  font-size: 0.9em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #3F72AF;
+  color: white;
+  cursor: pointer;
+  transition: border-color 0.25s;
+  margin: 6px;
+}
+
+.timeChooser{
+  width: 40px;
+  padding: 0.6em;
+  font-size: 0.8em;
+  font-weight: 500;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  text-align: center;
+}

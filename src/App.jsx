@@ -5,6 +5,8 @@ import Options from './components/Options'
 import Sidebar from './components/Sidebar'
 import { generate, getModels } from './llm/Generator'
 import { getBasePrompt, setQuestions} from './llm/PromptCreator'
+import CountdownDisplay from './components/CountdownDisplay'
+import StartCountdown from './components/StartCountdown'
 
 function App({modelsTest}) {
   let [questionIndex,setQuestionIndex] = useState(0);
@@ -13,6 +15,14 @@ function App({modelsTest}) {
   const [model, setModel] = useState("")
   const [models, setModels] = useState([])
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [countdown, setCountdown] = useState(false);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(30);
+  const [minutesCountdown, setMinutesCountdown] = useState(0);
+  const [secondsCountdown, setSecondsCountdown] = useState(30);
+  const [isRunning, setIsRunning] = useState(false);
+  const intervalRef = useRef(null);
+
 
   const [categories, setCategories] = useState({
     geography: true,
@@ -68,9 +78,7 @@ function App({modelsTest}) {
   
   return (
     <>
-     <Options sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-      
-    <Sidebar 
+     <Sidebar 
       sidebarOpen={sidebarOpen}
       setSidebarOpen={setSidebarOpen} 
       model = {model}
@@ -78,23 +86,55 @@ function App({modelsTest}) {
       setModel = {setModel}
       categories = {categories}
       setCategories = {setCategories}
+      countdown={countdown}
+      setCountdown = {setCountdown}
+      minutes = {minutes}
+      setMinutes = {setMinutes}
+      seconds = {seconds}
+      setSeconds = {setSeconds}
+      setMinutesCountdown = {setMinutesCountdown}
+      setSecondsCountdown = {setSecondsCountdown}
       />
+     <CountdownDisplay
+      countdown={countdown}
+      minutesCountdown = {minutesCountdown}
+      setMinutesCountdown = {setMinutesCountdown}
+      secondsCountdown = {secondsCountdown}
+      setSecondsCountdown = {setSecondsCountdown}
+
+      />
+
+     <Options 
+     sidebarOpen={sidebarOpen} 
+     setSidebarOpen={setSidebarOpen} 
+     />
       
       <QuestionCard 
       question={questions.current[questionIndex]?.question} 
       answer= {questions.current[questionIndex]?.answer} 
-      showAnswer= {showAnswer}>
+      showAnswer= {showAnswer}
+      />
 
-      </QuestionCard>
+     
 
       <Buttons 
       revealAnswer={revealAnswer} 
       newQuestion = {newQuestion}
       disableNew={disableNew}
       nextText={disableNew ? "Generating..." : "Next Question"}
-      >
+      />
 
-      </Buttons>
+      <StartCountdown
+      countdown={countdown}
+      setMinutesCountdown = {setMinutesCountdown}
+      secondsCountdown = {secondsCountdown}
+      setSecondsCountdown = {setSecondsCountdown}
+      intervalRef = {intervalRef}
+      isRunning = {isRunning}
+      setIsRunning = {setIsRunning}
+      minutes = {minutes}
+      seconds = {seconds}
+      />
       
     </>
   )

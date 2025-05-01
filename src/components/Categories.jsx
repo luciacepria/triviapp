@@ -30,7 +30,7 @@ export default function Categories({categories, setCategories}) {
                 };
         
                 const selectedCategoryLabels = Object.entries(updatedCategories)
-                    .filter(({label:isChecked}) => isChecked)
+                    .filter((e) => e[1])
                     .map(([key]) => categoryLabels[key]);
         
                 setCategoriesPrompt(selectedCategoryLabels);

@@ -1,6 +1,4 @@
-import React from 'react'
-
-export default function ({countdown, setMinutesCountdown, setSecondsCountdown, intervalRef, isRunning, setIsRunning, minutes, seconds, revealAnswer}) {
+export default function StartCountdown({countdown, setMinutesCountdown, setSecondsCountdown, intervalRef, isRunning, setIsRunning, minutes, seconds, revealAnswer}) {
   if (!countdown) return null;
 
   const toggleCountdown = () => {

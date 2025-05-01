@@ -66,13 +66,6 @@ function App({modelsTest}) {
   
     setShowAnswer(false);
     setQuestionIndex((prevIndex) => (prevIndex + 1) % questions.current.length)
-
-
-
-    console.log(getBasePrompt());
-
-
-    
   };
 
   

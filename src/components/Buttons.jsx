@@ -1,6 +1,6 @@
 export default function Buttons({revealAnswer, newQuestion, disableNew, nextText, minutes, seconds, intervalRef, setMinutesCountdown, setSecondsCountdown, setIsRunning}) {
 
-  const handleNewQuestion = (e) => {
+  const handleNewQuestion = () => {
     newQuestion();
     setMinutesCountdown(minutes);
     setSecondsCountdown(seconds);

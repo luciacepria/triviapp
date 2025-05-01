@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function Countdown({countdown, setCountdown, minutes, setMinutes, seconds, setSeconds, setMinutesCountdown, setSecondsCountdown}) {
   const handleClick = () => {
     setCountdown(prev => !prev);

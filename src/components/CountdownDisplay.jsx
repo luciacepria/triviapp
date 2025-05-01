@@ -1,5 +1,3 @@
-import React, { useEffect } from 'react';
-
 export default function CountdownDisplay({countdown, minutesCountdown, secondsCountdown}) {
 
 

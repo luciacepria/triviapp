@@ -1,4 +1,3 @@
-import React from 'react'
 import { setCategories as setCategoriesPrompt } from '../llm/PromptCreator'
 
 export default function Categories({categories, setCategories}) {
@@ -31,7 +30,7 @@ export default function Categories({categories, setCategories}) {
                 };
         
                 const selectedCategoryLabels = Object.entries(updatedCategories)
-                    .filter(([_, isChecked]) => isChecked)
+                    .filter(({label:isChecked}) => isChecked)
                     .map(([key]) => categoryLabels[key]);
         
                 setCategoriesPrompt(selectedCategoryLabels);

@@ -1,8 +1,18 @@
-export default function Buttons({revealAnswer, newQuestion, disableNew, nextText}) {
+export default function Buttons({revealAnswer, newQuestion, disableNew, nextText, minutes, seconds, intervalRef, setMinutesCountdown, setSecondsCountdown, setIsRunning}) {
+
+  const handleNewQuestion = () => {
+    newQuestion();
+    setMinutesCountdown(minutes);
+    setSecondsCountdown(seconds);
+    clearInterval(intervalRef.current);
+    intervalRef.current = null;
+    setIsRunning(false);
+
+  }
   return (
     <>
       <button onClick={revealAnswer}>Reveal Answer</button>
-      <button onClick={newQuestion} disabled={disableNew}>{nextText}</button>
+      <button onClick={handleNewQuestion} disabled={disableNew}>{nextText}</button>
     </>
   )
 }

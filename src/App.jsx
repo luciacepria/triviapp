@@ -2,10 +2,11 @@ import { useState, useEffect, useRef } from 'react'
 import QuestionCard from './components/QuestionCard'
 import Buttons from './components/Buttons'
 import Options from './components/Options'
-import ModelSelector from './components/ModelSelector'
-import ModelsNotFound from './components/ModelsNotFound'
+import Sidebar from './components/Sidebar'
 import { generate, getModels } from './llm/Generator'
 import { getBasePrompt, setQuestions} from './llm/PromptCreator'
+import CountdownDisplay from './components/CountdownDisplay'
+import StartCountdown from './components/StartCountdown'
 
 function App({modelsTest}) {
   let [questionIndex,setQuestionIndex] = useState(0);
@@ -13,6 +14,25 @@ function App({modelsTest}) {
   const [disableNew, setDisableNew] = useState(false);
   const [model, setModel] = useState("")
   const [models, setModels] = useState([])
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [countdown, setCountdown] = useState(false);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(30);
+  const [minutesCountdown, setMinutesCountdown] = useState(0);
+  const [secondsCountdown, setSecondsCountdown] = useState(30);
+  const [isRunning, setIsRunning] = useState(false);
+  const intervalRef = useRef(null);
+
+
+  const [categories, setCategories] = useState({
+    geography: true,
+    entertainment: true,
+    history: true,
+    artLiterature: true,
+    scienceNature: true,
+    sportsLeisure: true,
+});
+
   let questions = useRef(
     [{question: "To start click on \"Next Question\"", answer: ""}]
   )
@@ -48,32 +68,73 @@ function App({modelsTest}) {
     setQuestionIndex((prevIndex) => (prevIndex + 1) % questions.current.length)
   };
 
-  if (models.length == 0) return <ModelsNotFound/>
   
   return (
     <>
-      <ModelSelector
+     <Sidebar 
+      sidebarOpen={sidebarOpen}
+      setSidebarOpen={setSidebarOpen} 
       model = {model}
       models = {models}
       setModel = {setModel}
+      categories = {categories}
+      setCategories = {setCategories}
+      countdown={countdown}
+      setCountdown = {setCountdown}
+      minutes = {minutes}
+      setMinutes = {setMinutes}
+      seconds = {seconds}
+      setSeconds = {setSeconds}
+      setMinutesCountdown = {setMinutesCountdown}
+      setSecondsCountdown = {setSecondsCountdown}
       />
-      <Options></Options>
+     <CountdownDisplay
+      countdown={countdown}
+      minutesCountdown = {minutesCountdown}
+      setMinutesCountdown = {setMinutesCountdown}
+      secondsCountdown = {secondsCountdown}
+      setSecondsCountdown = {setSecondsCountdown}
 
+      />
+
+     <Options 
+     sidebarOpen={sidebarOpen} 
+     setSidebarOpen={setSidebarOpen} 
+     />
+      
       <QuestionCard 
       question={questions.current[questionIndex]?.question} 
       answer= {questions.current[questionIndex]?.answer} 
-      showAnswer= {showAnswer}>
+      showAnswer= {showAnswer}
+      />
 
-      </QuestionCard>
+     
 
       <Buttons 
       revealAnswer={revealAnswer} 
       newQuestion = {newQuestion}
       disableNew={disableNew}
       nextText={disableNew ? "Generating..." : "Next Question"}
-      >
+      minutes = {minutes}
+      seconds = {seconds}
+      intervalRef = {intervalRef}
+      setMinutesCountdown = {setMinutesCountdown}
+      setSecondsCountdown = {setSecondsCountdown}
+      setIsRunning = {setIsRunning}
+      />
 
-      </Buttons>
+      <StartCountdown
+      countdown={countdown}
+      setMinutesCountdown = {setMinutesCountdown}
+      setSecondsCountdown = {setSecondsCountdown}
+      intervalRef = {intervalRef}
+      isRunning = {isRunning}
+      setIsRunning = {setIsRunning}
+      minutes = {minutes}
+      seconds = {seconds}
+      revealAnswer = {revealAnswer}
+      />
+      
     </>
   )
 }

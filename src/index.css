@@ -45,13 +45,15 @@ h1 {
 
 .card {
   padding: 2em;
-  width: 18rem;
-  height: 8rem;
+  width: 35rem;
+  height: 20rem;
   background-color: #F9F7F7;
   color: #2b2b2b;
   border-radius: 15px;
   align-content: center;
   text-align: center;
+  font-size: 1.5em;
+  font-weight: 550;
 }
 
 .options {
@@ -84,4 +86,78 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20%;  
+  height: 100vh;
+  background-color: #1f2937;
+  color: white;
+  padding: 1rem;
+  z-index: 40;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
+  transform: translateX(-100%);  
+  transition: transform 0.3s ease-in-out;
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: left;
+  margin-bottom: 1.5rem;
+}
+
+
+.sidebar-header h2 {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+
+.sidebar-content {
+  text-align: left; 
+}
+
+
+.sidebar-content label {
+  display: block;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.enableButton {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.4em 0.8em;
+  font-size: 0.9em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #3F72AF;
+  color: white;
+  cursor: pointer;
+  transition: border-color 0.25s;
+  margin: 6px;
+}
+
+.timeChooser{
+  width: 40px;
+  padding: 0.6em;
+  font-size: 0.8em;
+  font-weight: 500;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  text-align: center;
 }

@@ -105,6 +105,7 @@ button:focus-visible {
 
 .sidebar.open {
   transform: translateX(0);
+  overflow: auto;
 }
 
 .sidebar-header {
@@ -136,6 +137,7 @@ button:focus-visible {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .enableButton {

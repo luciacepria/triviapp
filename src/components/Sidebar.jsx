@@ -3,6 +3,7 @@ import ModelsNotFound from './ModelsNotFound'
 import Categories from './Categories'
 import Countdown from './Countdown'
 import { useState } from 'react'
+import GameDificulty from './GameDificulty'
 
 const showInfo = () =>{
     alert("Questions will be generated based on the selected categories. After choosing an answer, click the “Reveal Answer” button to view the correct response. To generate a new question, use the “New Question” button. You may select or deselect the categories you wish to include; note that questions are generated in sets of three, all based on the currently selected categories. You must go through all three questions before generating a new set. Please ensure that Ollama is installed and running for the application to function properly.")
@@ -54,6 +55,8 @@ export default function Sidebar({ setSidebarOpen, model, setModel, models, sideb
                     setMinutesCountdown = {setMinutesCountdown}
                     setSecondsCountdown = {setSecondsCountdown}
                 />
+                <h3>Game Dificulty</h3>
+                <GameDificulty/>
                 
                 <i onClick={showInfo} className="fa-solid fa-circle-info"></i>
             </div>

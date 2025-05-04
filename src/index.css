@@ -183,3 +183,15 @@ button:focus-visible {
   border: 1px solid #ccc;
   text-align: center;
 }
+.fa-solid.fa-circle-info {
+  margin-top: 25px;
+}
+
+.dropDown {
+  width: 130px; 
+  height: 25px; 
+  padding: 5px; 
+  font-size: 14px; 
+  border-radius: 5px; 
+  cursor: pointer; 
+}

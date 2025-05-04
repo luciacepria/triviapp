@@ -33,12 +33,17 @@ npm install
 ```
 Note that npm should have already been installed with your Node.js installation process.
 
+Also note that if you try to run the app from the release version, in order to run the bundled scripts you will need Python. Else, you need to use a static server of your choosing.
+
 ### 🚀 Running the app
 To run a development server with the app, just type in your terminal:
 ```
 npm run dev
 ```
 Then access the local version in your browser, `ctrl + click` the URL in the running output of the command.
+
+To run from the release version, run the shell file correspondent to your OS, or serve it in your static server.
+
 We recommend using major browsers such as [Mozilla Firefox](https://www.mozilla.org/en-US/firefox/new/) or [Google Chrome](https://www.google.com/chrome/).
 
 ## 🕹️ Usage
@@ -47,6 +52,9 @@ After running the app and opening it in your browser, you will be presented with
 
 - Click on `Reveal Answer` to reveal the answer to the current question.
 - Click on `Next Question` to show a new question.
+- Click on `⚙️` to open the settings sidebar.
+
+In the settings sidebar you will be able to configure your game. Select the categories for your questions at any time, switch between any of the provided themes, start a customizable countdown or select the difficulty of your game.   
 
 Users also have a `?` button at the top-left corner of the page offering help in a pop-up dialog.
 
